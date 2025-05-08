@@ -47,7 +47,7 @@ import { RequestHandlerExtra } from "../shared/protocol.js";
 import { Transport } from "../shared/transport.js";
 import { userInfo } from "os";
 export interface McpServerOptions extends Implementation {
-  userId?: string;
+  madKey?: string;
 }
 
 /**
@@ -68,17 +68,17 @@ export class McpServer {
   private _registeredTools: { [name: string]: RegisteredTool } = {};
   private _registeredPrompts: { [name: string]: RegisteredPrompt } = {};
 
-  private _userId?: string;
+  private _madKey?: string;
 
   constructor(serverInfo: McpServerOptions, options?: ServerOptions) {
-    // Merge options with userId from serverInfo
+    // Merge options with madKey from serverInfo
     const serverOptions: ServerOptions = {
       ...options,
-      userId: serverInfo.userId
+      madKey: serverInfo.madKey,
     };
     
     this.server = new Server(serverInfo, serverOptions);
-    this._userId = serverInfo.userId;
+    this._madKey = serverInfo.madKey;
   }
 
   // constructor(serverInfo: Implementation, options?: ServerOptions) {

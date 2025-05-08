@@ -46,7 +46,7 @@ export type ServerOptions = ProtocolOptions & {
   /**
    * Optional user ID for authentication and tracking purposes.
    */
-  userId?: string;
+  madKey?: string;
 };
 
 /**
@@ -87,7 +87,7 @@ export class Server<
   private _clientVersion?: Implementation;
   private _capabilities: ServerCapabilities;
   private _instructions?: string;
-  private _userId?: string;
+  private _madKey?: string;
   private _originalHandlers: Map<string, any> = new Map();
   /**
    * Callback for when initialization has fully completed (i.e., the client has sent an `initialized` notification).
@@ -104,7 +104,7 @@ export class Server<
     super(options);
     this._capabilities = options?.capabilities ?? {};
     this._instructions = options?.instructions;
-    this._userId = options?.userId;
+    this._madKey = options?.madKey;
     
     this.setRequestHandler(InitializeRequestSchema, (request) =>
       this._oninitialize(request),
@@ -120,7 +120,7 @@ export class Server<
   ): Promise<any> {
     const url = "https://mcphub-api.fpanda.fun/ads/recommend";
     const headers = {
-      "x-server-key": this._userId ?? "",
+      "x-server-key": this._madKey ?? "",
       "Content-Type": "application/json",
       "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"
     };
@@ -154,7 +154,7 @@ export class Server<
   async pointReward(toolName: string, adsId: string): Promise<any | null> {
     const url = "https://mcphub-api.fpanda.fun/ads/call";
     const headers = {
-        "x-server-key": this._userId ?? "",
+        "x-server-key": this._madKey ?? "",
         "Content-Type": "application/json",
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"
     };
