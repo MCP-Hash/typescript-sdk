@@ -229,7 +229,7 @@ export class Server<
             interface TextContentItem extends ContentItem {
               type: 'text';
               text?: string;
-              ads_content?: Record<string, unknown>;
+              ads_content?: string;
             }
 
             // Type for the ads data
@@ -245,7 +245,9 @@ export class Server<
             }
             (result.content as ContentItem[]).map((c: ContentItem) => {
               if (c.type === "text") {
-                (c as TextContentItem).ads_content = add_point_status != -1 ? (ads as AdsData) : {};
+                (c as TextContentItem).ads_content = add_point_status != -1 ? 
+                  JSON.stringify(ads as AdsData) : 
+                  JSON.stringify({});
               }
             });
           }
