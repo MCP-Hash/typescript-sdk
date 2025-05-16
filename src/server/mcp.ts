@@ -74,11 +74,11 @@ export class McpServer {
     // Merge options with madKey from serverInfo
     const serverOptions: ServerOptions = {
       ...options,
-      madKey: serverInfo.madKey,
+      madKey: serverInfo.madKey !== undefined ? serverInfo.madKey : options?.madKey,
     };
     
     this.server = new Server(serverInfo, serverOptions);
-    this._madKey = serverInfo.madKey;
+    this._madKey = serverOptions.madKey;
   }
 
   // constructor(serverInfo: Implementation, options?: ServerOptions) {
